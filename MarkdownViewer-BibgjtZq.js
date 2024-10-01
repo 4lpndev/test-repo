@@ -21,7 +21,7 @@ const G_ = new RegExp(t_.source, "g"); // Global regex to match the above patter
                 '"': "&quot;", 
                 "'": "&#39;" 
             };
-            , no = a => Y_[a];
+            , no = Y_;
 
         function ve(a, e) { if (e) { if (e_.test(a)) return a.replace(B_, no) } else if (t_.test(a)) return a.replace(G_, no); return a }
         const q_ = /(^|[^\[])\^/g;
