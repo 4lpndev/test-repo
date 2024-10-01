@@ -9,19 +9,21 @@ let __tla = Promise.all([(() => { try { return __tla_0 } catch { } })()])
 
         function jc(a) { Ze = a }
         const e_ = /[&<>"']/; // Matches HTML special characters
-const B_ = new RegExp(e_.source, "g"); // Global regex to match special characters
-const t_ = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/; // Matches certain HTML entities
-const G_ = new RegExp(t_.source, "g"); // Global regex to match the above pattern
-
-// Define a mapping for HTML characters to their escaped values
-            const Y_ = { 
-                "&": "&amp;", 
-                "<": "&lt;", 
-                ">": "&gt;", 
-                '"': "&quot;", 
-                "'": "&#39;" 
-            };
-            , no = Y_;
+        const B_ = new RegExp(e_.source, "g"); // Global regex to match special characters
+        const t_ = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/; // Matches certain HTML entities
+        const G_ = new RegExp(t_.source, "g"); // Global regex to match the above pattern
+    
+        // Define a mapping for HTML characters to their escaped values
+        const Y_ = { 
+            "&": "&amp;", 
+            "<": "&lt;", 
+            ">": "&gt;", 
+            '"': "&quot;", 
+            "'": "&#39;" 
+        };
+    
+        // Function to retrieve escaped value
+        const no = a => Y_[a];
 
         function ve(a, e) { if (e) { if (e_.test(a)) return a.replace(B_, no) } else if (t_.test(a)) return a.replace(G_, no); return a }
         const q_ = /(^|[^\[])\^/g;
