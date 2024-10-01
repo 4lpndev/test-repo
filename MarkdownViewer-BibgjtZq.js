@@ -14,7 +14,7 @@ let __tla = Promise.all([(() => { try { return __tla_0 } catch { } })()])
             const G_ = new RegExp(t_.source, "g");  // Global regex to match the above pattern
             
             // Define a mapping for HTML characters to themselves
-            const Y_ = { "&": "&", "<": "<", ">": ">", '"': '"', "'": "'" };
+            const Y_ = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
             , no = a => Y_[a];
 
         function ve(a, e) { if (e) { if (e_.test(a)) return a.replace(B_, no) } else if (t_.test(a)) return a.replace(G_, no); return a }
