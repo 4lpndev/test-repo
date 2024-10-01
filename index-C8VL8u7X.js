@@ -7105,125 +7105,162 @@ ${i}`); return }
         , he = t => { if (!Oe(t)) return !1; const e = Object.getPrototypeOf(t); return e === null || e.constructor === Object }
         , HI = t => t == null ? "" : Ye(t) || he(t) && t.toString === Im ? JSON.stringify(t, null, 2) : String(t);
     
-    function BI(t, e = "") { return t.reduce((n, r, o) => o === 0 ? n + r : n + e + r, "") }
-    
-    function ea(t) { let e = t; return () => ++e }
-    
-    function $I(t, e) { typeof console < "u" && (console.warn("[intlify] " + t), e && console.warn(e.stack)) }
-    const qi = t => !Oe(t) || Ye(t);
-    
-    function Zi(t, e) {
-        if (qi(t) || qi(e)) throw new Error("Invalid value");
-        const n = [{ src: t, des: e }];
-        for (; n.length;) {
-            const { src: r, des: o } = n.pop();
-            Object.keys(r)
-                .forEach(i => { Oe(r[i]) && !Oe(o[i]) && (o[i] = Array.isArray(r[i]) ? [] : {}), qi(o[i]) || qi(r[i]) ? o[i] = r[i] : n.push({ src: r[i], des: o[i] }) })
-        }
+    function BI(t, e = "") {
+    return t.reduce((n, r, o) => (o === 0 ? n + r : n + e + r), "");
+}
+
+function ea(t) {
+    let e = t;
+    return () => ++e;
+}
+
+function $I(t, e) {
+    if (typeof console !== "undefined") {
+        console.warn("[intlify] " + t);
+        if (e) console.warn(e.stack);
     }
-    
-    function KI(t, e, n) { return { line: t, column: e, offset: n } }
-    
-    function bs(t, e, n) { return { start: t, end: e } }
-    const jI = /\{([0-9a-zA-Z]+)\}/g;
-    
-    function Sm(t, ...e) { return e.length === 1 && qI(e[0]) && (e = e[0]), (!e || !e.hasOwnProperty) && (e = {}), t.replace(jI, (n, r) => e.hasOwnProperty(r) ? e[r] : "") }
-    const km = Object.assign
-        , Gd = t => typeof t == "string"
-        , qI = t => t !== null && typeof t == "object";
-    
-    function Rm(t, e = "") { return t.reduce((n, r, o) => o === 0 ? n + r : n + e + r, "") }
-    const Wl = { USE_MODULO_SYNTAX: 1, __EXTEND_POINT__: 2 }
-        , VI = {
-            [Wl.USE_MODULO_SYNTAX]: "Use modulo before '{{0}}'."
-        };
-    
-    function GI(t, e, ...n) {
-        const r = Sm(VI[t], ...n || [])
-            , o = { message: String(r), code: t };
-        return e && (o.location = e), o
+}
+
+const qi = t => !Oe(t) || Ye(t);
+
+function Zi(t, e) {
+    if (qi(t) || qi(e)) throw new Error("Invalid value");
+    const n = [{ src: t, des: e }];
+    while (n.length) {
+        const { src: r, des: o } = n.pop();
+        Object.keys(r).forEach(i => {
+            if (Oe(r[i]) && !Oe(o[i])) {
+                o[i] = Array.isArray(r[i]) ? [] : {};
+            }
+            if (!qi(o[i]) && !qi(r[i])) {
+                n.push({ src: r[i], des: o[i] });
+            } else {
+                o[i] = r[i];
+            }
+        });
     }
-    const le = {
-        EXPECTED_TOKEN: 1,
-        INVALID_TOKEN_IN_PLACEHOLDER: 2,
-        UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER: 3,
-        UNKNOWN_ESCAPE_SEQUENCE: 4,
-        INVALID_UNICODE_ESCAPE_SEQUENCE: 5,
-        UNBALANCED_CLOSING_BRACE: 6,
-        UNTERMINATED_CLOSING_BRACE: 7,
-        EMPTY_PLACEHOLDER: 8,
-        NOT_ALLOW_NEST_PLACEHOLDER: 9,
-        INVALID_LINKED_FORMAT: 10,
-        MUST_HAVE_MESSAGES_IN_PLURAL: 11,
-        UNEXPECTED_EMPTY_LINKED_MODIFIER: 12,
-        UNEXPECTED_EMPTY_LINKED_KEY: 13,
-        UNEXPECTED_LEXICAL_ANALYSIS: 14,
-        UNHANDLED_CODEGEN_NODE_TYPE: 15,
-        UNHANDLED_MINIFIER_NODE_TYPE: 16,
-        __EXTEND_POINT__: 17
-    };
-    
-    const WI = {
-        [le.EXPECTED_TOKEN]: "Expected token: '{0}'",
-        [le.INVALID_TOKEN_IN_PLACEHOLDER]: "Invalid token in placeholder: '{0}'",
-        [le.UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER]: "Unterminated single quote in placeholder",
-        [le.UNKNOWN_ESCAPE_SEQUENCE]: "Unknown escape sequence: \\{0}",
-        [le.INVALID_UNICODE_ESCAPE_SEQUENCE]: "Invalid unicode escape sequence: {0}",
-        [le.UNBALANCED_CLOSING_BRACE]: "Unbalanced closing brace",
-        [le.UNTERMINATED_CLOSING_BRACE]: "Unterminated closing brace",
-        [le.EMPTY_PLACEHOLDER]: "Empty placeholder",
-        [le.NOT_ALLOW_NEST_PLACEHOLDER]: "Not allowed nest placeholder",
-        [le.INVALID_LINKED_FORMAT]: "Invalid linked format",
-        [le.MUST_HAVE_MESSAGES_IN_PLURAL]: "Plural must have messages",
-        [le.UNEXPECTED_EMPTY_LINKED_MODIFIER]: "Unexpected empty linked modifier",
-        [le.UNEXPECTED_EMPTY_LINKED_KEY]: "Unexpected empty linked key",
-        [le.UNEXPECTED_LEXICAL_ANALYSIS]: "Unexpected lexical analysis in token: '{0}'",
-        [le.UNHANDLED_CODEGEN_NODE_TYPE]: "unhandled codegen node type: '{0}'",
-        [le.UNHANDLED_MINIFIER_NODE_TYPE]: "unhandled minifier node type: '{0}'"
-    };
-    
-    function Mo(t, e, n = {}) {
-        const { domain: r, messages: o, args: i } = n;
-        const s = Sm((o || WI)[t] || "", ...i || []);
-        const a = new SyntaxError(String(s));
-        a.code = t;
-        if (e) {
-            a.location = e;
-        }
-        a.domain = r;
-        return a;
+}
+
+function KI(t, e, n) {
+    return { line: t, column: e, offset: n };
+}
+
+function bs(t, e, n) {
+    return { start: t, end: e };
+}
+
+const jI = /\{([0-9a-zA-Z]+)\}/g;
+
+function Sm(t, ...e) {
+    if (e.length === 1 && qI(e[0])) e = e[0];
+    if (!e || !e.hasOwnProperty) e = {};
+    return t.replace(jI, (n, r) => (e.hasOwnProperty(r) ? e[r] : ""));
+}
+
+const km = Object.assign,
+      Gd = t => typeof t === "string",
+      qI = t => t !== null && typeof t === "object";
+
+function Rm(t, e = "") {
+    return t.reduce((n, r, o) => (o === 0 ? n + r : n + e + r), "");
+}
+
+const Wl = { USE_MODULO_SYNTAX: 1, __EXTEND_POINT__: 2 },
+      VI = {
+          [Wl.USE_MODULO_SYNTAX]: "Use modulo before '{{0}}'."
+      };
+
+function GI(t, e, ...n) {
+    const r = Sm(VI[t], ...n || []);
+    const o = { message: String(r), code: t };
+    if (e) o.location = e;
+    return o;
+}
+
+const le = {
+    EXPECTED_TOKEN: 1,
+    INVALID_TOKEN_IN_PLACEHOLDER: 2,
+    UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER: 3,
+    UNKNOWN_ESCAPE_SEQUENCE: 4,
+    INVALID_UNICODE_ESCAPE_SEQUENCE: 5,
+    UNBALANCED_CLOSING_BRACE: 6,
+    UNTERMINATED_CLOSING_BRACE: 7,
+    EMPTY_PLACEHOLDER: 8,
+    NOT_ALLOW_NEST_PLACEHOLDER: 9,
+    INVALID_LINKED_FORMAT: 10,
+    MUST_HAVE_MESSAGES_IN_PLURAL: 11,
+    UNEXPECTED_EMPTY_LINKED_MODIFIER: 12,
+    UNEXPECTED_EMPTY_LINKED_KEY: 13,
+    UNEXPECTED_LEXICAL_ANALYSIS: 14,
+    UNHANDLED_CODEGEN_NODE_TYPE: 15,
+    UNHANDLED_MINIFIER_NODE_TYPE: 16,
+    __EXTEND_POINT__: 17
+};
+
+const WI = {
+    [le.EXPECTED_TOKEN]: "Expected token: '{0}'",
+    [le.INVALID_TOKEN_IN_PLACEHOLDER]: "Invalid token in placeholder: '{0}'",
+    [le.UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER]: "Unterminated single quote in placeholder",
+    [le.UNKNOWN_ESCAPE_SEQUENCE]: "Unknown escape sequence: \\{0}",
+    [le.INVALID_UNICODE_ESCAPE_SEQUENCE]: "Invalid unicode escape sequence: {0}",
+    [le.UNBALANCED_CLOSING_BRACE]: "Unbalanced closing brace",
+    [le.UNTERMINATED_CLOSING_BRACE]: "Unterminated closing brace",
+    [le.EMPTY_PLACEHOLDER]: "Empty placeholder",
+    [le.NOT_ALLOW_NEST_PLACEHOLDER]: "Not allowed nest placeholder",
+    [le.INVALID_LINKED_FORMAT]: "Invalid linked format",
+    [le.MUST_HAVE_MESSAGES_IN_PLURAL]: "Plural must have messages",
+    [le.UNEXPECTED_EMPTY_LINKED_MODIFIER]: "Unexpected empty linked modifier",
+    [le.UNEXPECTED_EMPTY_LINKED_KEY]: "Unexpected empty linked key",
+    [le.UNEXPECTED_LEXICAL_ANALYSIS]: "Unexpected lexical analysis in token: '{0}'",
+    [le.UNHANDLED_CODEGEN_NODE_TYPE]: "unhandled codegen node type: '{0}'",
+    [le.UNHANDLED_MINIFIER_NODE_TYPE]: "unhandled minifier node type: '{0}'"
+};
+
+function Mo(t, e, n = {}) {
+    const { domain: r, messages: o, args: i } = n;
+    const s = Sm((o || WI)[t] || "", ...i || []);
+    const a = new SyntaxError(String(s));
+    a.code = t;
+    if (e) {
+        a.location = e;
     }
-    
-    function zI(t) {
-        throw t;
+    a.domain = r;
+    return a;
+}
+
+function zI(t) {
+    throw t;
+}
+
+const Pn = " ",
+      YI = "\r",
+      Pt = ``,
+      QI = "",
+      JI = "";
+
+function XI(t) {
+    const e = t;
+    let n = 0,
+        r = 1,
+        o = 1,
+        i = 0;
+
+    const s = K => e[K] === YI && e[K + 1] === Pt,
+          a = K => e[K] === Pn,
+          c = K => e[K] === JI,
+          l = K => e[K] === QI,
+          h = K => s(K) || a(K) || c(K) || l(K),
+          f = () => n,
+          g = () => r,
+          T = () => o,
+          A = () => i,
+          b = K => s(K) || c(K) || l(K) ? Pt : e[K],
+          k = () => b(n),
+          O = () => b(n + i);
+
+    function x() {
+        return i = 0, h(n) && (r++, o = 0), s(n) && n++, n++, o++, e[n];
     }
-    
-    const Pn = " ",
-        YI = "\r",
-        Pt = ``,
-        QI = "",  // Correctly positioned now
-        JI = "";
-    
-    function XI(t) {
-        const e = t;
-        let n = 0
-            , r = 1
-            , o = 1
-            , i = 0;
-        const s = K => e[K] === YI && e[K + 1] === Pt
-            , a = K => e[K] === Pt
-            , c = K => e[K] === JI
-            , l = K => e[K] === QI
-            , h = K => s(K) || a(K) || c(K) || l(K)
-            , f = () => n
-            , g = () => r
-            , T = () => o
-            , A = () => i
-            , b = K => s(K) || c(K) || l(K) ? Pt : e[K]
-            , k = () => b(n)
-            , O = () => b(n + i);
-        
-        function x() { return i = 0, h(n) && (r++, o = 0), s(n) && n++, n++, o++, e[n] }
         
         function I() { return s(n + i) && i++, i++, e[n + i] }
         
