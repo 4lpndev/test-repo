@@ -7143,34 +7143,66 @@ ${i}`); return }
             , o = { message: String(r), code: t };
         return e && (o.location = e), o
     }
-    const le = { EXPECTED_TOKEN: 1, INVALID_TOKEN_IN_PLACEHOLDER: 2, UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER: 3, UNKNOWN_ESCAPE_SEQUENCE: 4, INVALID_UNICODE_ESCAPE_SEQUENCE: 5, UNBALANCED_CLOSING_BRACE: 6, UNTERMINATED_CLOSING_BRACE: 7, EMPTY_PLACEHOLDER: 8, NOT_ALLOW_NEST_PLACEHOLDER: 9, INVALID_LINKED_FORMAT: 10, MUST_HAVE_MESSAGES_IN_PLURAL: 11, UNEXPECTED_EMPTY_LINKED_MODIFIER: 12, UNEXPECTED_EMPTY_LINKED_KEY: 13, UNEXPECTED_LEXICAL_ANALYSIS: 14, UNHANDLED_CODEGEN_NODE_TYPE: 15, UNHANDLED_MINIFIER_NODE_TYPE: 16, __EXTEND_POINT__: 17 }
-        , WI = {
-            [le.EXPECTED_TOKEN]: "Expected token: '{0}'"
-            , [le.INVALID_TOKEN_IN_PLACEHOLDER]: "Invalid token in placeholder: '{0}'"
-            , [le.UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER]: "Unterminated single quote in placeholder"
-            , [le.UNKNOWN_ESCAPE_SEQUENCE]: "Unknown escape sequence: \\{0}"
-            , [le.INVALID_UNICODE_ESCAPE_SEQUENCE]: "Invalid unicode escape sequence: {0}"
-            , [le.UNBALANCED_CLOSING_BRACE]: "Unbalanced closing brace"
-            , [le.UNTERMINATED_CLOSING_BRACE]: "Unterminated closing brace"
-            , [le.EMPTY_PLACEHOLDER]: "Empty placeholder"
-            , [le.NOT_ALLOW_NEST_PLACEHOLDER]: "Not allowed nest placeholder"
-            , [le.INVALID_LINKED_FORMAT]: "Invalid linked format"
-            , [le.MUST_HAVE_MESSAGES_IN_PLURAL]: "Plural must have messages"
-            , [le.UNEXPECTED_EMPTY_LINKED_MODIFIER]: "Unexpected empty linked modifier"
-            , [le.UNEXPECTED_EMPTY_LINKED_KEY]: "Unexpected empty linked key"
-            , [le.UNEXPECTED_LEXICAL_ANALYSIS]: "Unexpected lexical analysis in token: '{0}'"
-            , [le.UNHANDLED_CODEGEN_NODE_TYPE]: "unhandled codegen node type: '{0}'"
-            , [le.UNHANDLED_MINIFIER_NODE_TYPE]: "unhandled mimifier node type: '{0}'"
-        };
+    const le = {
+        EXPECTED_TOKEN: 1,
+        INVALID_TOKEN_IN_PLACEHOLDER: 2,
+        UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER: 3,
+        UNKNOWN_ESCAPE_SEQUENCE: 4,
+        INVALID_UNICODE_ESCAPE_SEQUENCE: 5,
+        UNBALANCED_CLOSING_BRACE: 6,
+        UNTERMINATED_CLOSING_BRACE: 7,
+        EMPTY_PLACEHOLDER: 8,
+        NOT_ALLOW_NEST_PLACEHOLDER: 9,
+        INVALID_LINKED_FORMAT: 10,
+        MUST_HAVE_MESSAGES_IN_PLURAL: 11,
+        UNEXPECTED_EMPTY_LINKED_MODIFIER: 12,
+        UNEXPECTED_EMPTY_LINKED_KEY: 13,
+        UNEXPECTED_LEXICAL_ANALYSIS: 14,
+        UNHANDLED_CODEGEN_NODE_TYPE: 15,
+        UNHANDLED_MINIFIER_NODE_TYPE: 16,
+        __EXTEND_POINT__: 17
+    };
     
-    function Mo(t, e, n = {}) { const { domain: r, messages: o, args: i } = n, s = Sm((o || WI)[t] || "", ...i || []), a = new SyntaxError(String(s)); return a.code = t, e && (a.location = e), a.domain = r, a }
+    const WI = {
+        [le.EXPECTED_TOKEN]: "Expected token: '{0}'",
+        [le.INVALID_TOKEN_IN_PLACEHOLDER]: "Invalid token in placeholder: '{0}'",
+        [le.UNTERMINATED_SINGLE_QUOTE_IN_PLACEHOLDER]: "Unterminated single quote in placeholder",
+        [le.UNKNOWN_ESCAPE_SEQUENCE]: "Unknown escape sequence: \\{0}",
+        [le.INVALID_UNICODE_ESCAPE_SEQUENCE]: "Invalid unicode escape sequence: {0}",
+        [le.UNBALANCED_CLOSING_BRACE]: "Unbalanced closing brace",
+        [le.UNTERMINATED_CLOSING_BRACE]: "Unterminated closing brace",
+        [le.EMPTY_PLACEHOLDER]: "Empty placeholder",
+        [le.NOT_ALLOW_NEST_PLACEHOLDER]: "Not allowed nest placeholder",
+        [le.INVALID_LINKED_FORMAT]: "Invalid linked format",
+        [le.MUST_HAVE_MESSAGES_IN_PLURAL]: "Plural must have messages",
+        [le.UNEXPECTED_EMPTY_LINKED_MODIFIER]: "Unexpected empty linked modifier",
+        [le.UNEXPECTED_EMPTY_LINKED_KEY]: "Unexpected empty linked key",
+        [le.UNEXPECTED_LEXICAL_ANALYSIS]: "Unexpected lexical analysis in token: '{0}'",
+        [le.UNHANDLED_CODEGEN_NODE_TYPE]: "unhandled codegen node type: '{0}'",
+        [le.UNHANDLED_MINIFIER_NODE_TYPE]: "unhandled minifier node type: '{0}'"
+    };
     
-    function zI(t) { throw t }
-    const Pn = " "
-        , YI = "\r"
-        , Pt = ``;
-        , QI = "",
-    JI = "";
+    function Mo(t, e, n = {}) {
+        const { domain: r, messages: o, args: i } = n;
+        const s = Sm((o || WI)[t] || "", ...i || []);
+        const a = new SyntaxError(String(s));
+        a.code = t;
+        if (e) {
+            a.location = e;
+        }
+        a.domain = r;
+        return a;
+    }
+    
+    function zI(t) {
+        throw t;
+    }
+    
+    const Pn = " ",
+        YI = "\r",
+        Pt = ``,
+        QI = "",  // Correctly positioned now
+        JI = "";
     
     function XI(t) {
         const e = t;
