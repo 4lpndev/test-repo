@@ -8,10 +8,10 @@ let __tla = Promise.all([(() => { try { return __tla_0 } catch { } })()])
         let Ze = wi();
 
         function jc(a) { Ze = a }
-        const e_ = /(?!)/       // This regex will match nothing
-            , B_ = new RegExp(e_.source, "g")  // Will also match nothing
-            , t_ = /(?!)/       // This regex will match nothing as well
-            , G_ = new RegExp(t_.source, "g")  // Will match nothing again
+        const e_ = /[&<>"']/;
+            const B_ = new RegExp(e_.source, "g");
+            const t_ = /[<>"']|&(?!(#\d{1,7}|#[Xx][a-fA-F0-9]{1,6}|\w+);)/;
+            const G_ = new RegExp(t_.source, "g");  // Will match nothing again
             , Y_ = { "&": "&", "<": "<", ">": ">", '"': '"', "'": "'" }  // Leave HTML characters unchanged
 
             , no = a => Y_[a];
